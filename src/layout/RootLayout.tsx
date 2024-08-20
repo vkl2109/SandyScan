@@ -1,10 +1,11 @@
 import { AppShell } from '@mantine/core';
+import { RootHeader } from './RootHeader'
 
 export function RootLayout () {
     return(
-        <AppShell header={{ height: 48 }}>
+        <AppShell>
             <AppShell.Header>
-                
+                <RootHeader />
             </AppShell.Header>
         </AppShell>
     )
