@@ -11,8 +11,16 @@ import {
     Text
 } from '@mantine/core'
 import logo from '/vite.svg'
+import { useViewportSize } from '@mantine/hooks';
+import { useMemo } from 'react';
 
 export function RootHeader () {
+    const { width } = useViewportSize();
+
+    const cardWidth = useMemo(() => {
+        return width < 400 ? (width - 10) : 400
+    },[width])
+
     return(
         <Group
             justify="space-between"
@@ -27,7 +35,7 @@ export function RootHeader () {
                 />
                 <Title>Sandy Scan</Title>
             </Group>
-            <HoverCard width={320} shadow="md" openDelay={200} closeDelay={400}>
+            <HoverCard width={cardWidth} shadow="md" openDelay={200} closeDelay={400}>
                 <HoverCard.Target>
                     <Avatar radius="xl" size="lg" />
                 </HoverCard.Target>
