@@ -33,7 +33,7 @@ export function RootHeader () {
                 h={rem(50)}
                 w={rem(50)}
                 />
-                <Title>Sandy Scan</Title>
+                <Title visibleFrom="sm">Sandy Scan</Title>
             </Group>
             <HoverCard width={cardWidth} shadow="md" openDelay={200} closeDelay={400}>
                 <HoverCard.Target>
