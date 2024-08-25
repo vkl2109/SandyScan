@@ -111,11 +111,14 @@ export function ScannerModal({ opened, close }: ScannerModalProps) {
                     align="center" 
                     h="100%"
                     pos="relative"
+                    style={{
+                        overflow: 'hidden'
+                    }}
                     >
                     <Group
                         pos="absolute"
                         bottom={rem(50)}
-                        w="50%"
+                        w="100%"
                         justify="center"
                         align="center"
                         style={{
@@ -131,7 +134,7 @@ export function ScannerModal({ opened, close }: ScannerModalProps) {
                             max={5}
                             step={0.01}
                             size="xl"
-                            w="80%"
+                            w="50%"
                             style={{
                                 zIndex: 1000
                             }}

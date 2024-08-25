@@ -5,7 +5,7 @@ import {
     Stack,
     Textarea,
 } from "@mantine/core";
-import { useForm } from "@mantine/form"
+import { isNotEmpty, useForm } from "@mantine/form"
 import { useState } from "react";
 import { notifications } from '@mantine/notifications';
 
@@ -18,6 +18,9 @@ export function QRForm () {
             name: '',
             notes: '',
         },
+        validate: {
+            name: isNotEmpty('Please Input Name')
+        }
     });
 
     const handleSubmit = async (values: { name: string; notes: string; }) => {
@@ -70,9 +73,10 @@ export function QRForm () {
                 <Button 
                     size="lg" 
                     radius="md"
-                    variant="outline"
+                    variant="light"
                     type="submit"
                     fullWidth
+                    disabled={form.getValues().name == ''}
                     >
                     Add QR Code
                 </Button>
