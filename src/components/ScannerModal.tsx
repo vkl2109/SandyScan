@@ -1,7 +1,9 @@
 import { 
     ActionIcon,
     Box,
+    Group,
     Modal, 
+    Slider, 
     Stack,
     rem, 
 } from "@mantine/core";
@@ -11,7 +13,7 @@ import {
     useState 
 } from "react";
 import { Html5Qrcode, Html5QrcodeResult } from "html5-qrcode";
-import { IconX } from "@tabler/icons-react";
+import { IconMinus, IconPlus, IconX } from "@tabler/icons-react";
 import { Scan } from './Scan'
 
 interface ScannerModalProps {
@@ -23,6 +25,7 @@ export function ScannerModal({ opened, close }: ScannerModalProps) {
     const videoRef = useRef<HTMLVideoElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
+    const [ zoom, setZoom ] = useState(1);
     const [stream, setStream] = useState<MediaStream | null>(null);
     const [qrScanner, setQrScanner] = useState<Html5Qrcode | null>(null);
 
@@ -109,10 +112,39 @@ export function ScannerModal({ opened, close }: ScannerModalProps) {
                     h="100%"
                     pos="relative"
                     >
+                    <Group
+                        pos="absolute"
+                        bottom={rem(50)}
+                        w="50%"
+                        justify="center"
+                        align="center"
+                        style={{
+                            zIndex: 1000
+                        }}
+                        >
+                        <IconMinus color="white"/>
+                        <Slider 
+                            label={null}
+                            value={zoom} 
+                            onChange={setZoom}
+                            min={1}
+                            max={5}
+                            step={0.01}
+                            size="xl"
+                            w="80%"
+                            style={{
+                                zIndex: 1000
+                            }}
+                            />
+                        <IconPlus color="white"/>
+                    </Group>
                     <Box
                         pos="absolute"
                         h="100%"
                         w="100%"
+                        style={{
+                            zIndex: 10
+                        }}
                         >
                         <Scan />
                     </Box>
@@ -138,6 +170,7 @@ export function ScannerModal({ opened, close }: ScannerModalProps) {
                         autoPlay 
                         style={{
                             height:'100%',
+                            transform: `scale(${zoom})`
                         }} 
                         />
                     <canvas 
