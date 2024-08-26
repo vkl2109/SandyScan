@@ -8,11 +8,14 @@ import {
     QRScanner,
     QRForm
 } from '../components'
+import { useQRStore } from "../zustand";
 // import { v4 as uuidv4 } from 'uuid';
 
 export function LandingPage () {
 
     const { width } = useViewportSize()
+
+    const link = useQRStore((state) => state.link)
 
     return(
         <Stack 
@@ -27,10 +30,11 @@ export function LandingPage () {
                 maw={width - 100}
                 radius="xl"
                 >
-                <Stack w="100%" justify="center" align="center">
-                    <QRScanner />
-                </Stack>
+                {link == '' ?
+                <QRScanner />
+                :
                 <QRForm />
+                }
             </Card>
         </Stack>
     )

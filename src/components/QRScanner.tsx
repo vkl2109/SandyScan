@@ -16,7 +16,7 @@ export function QRScanner () {
     const { width } = useViewportSize()
 
     return(
-        <>
+        <Stack w="100%" justify="center" align="center">
             <Button
                 p="sm"
                 // bd="3px dashed"
@@ -37,7 +37,6 @@ export function QRScanner () {
             <Button
                 leftSection={<IconUpload />}
                 fullWidth
-                mb="md"
                 size="xl"
                 radius="xl"
                 variant="outline"
@@ -48,6 +47,6 @@ export function QRScanner () {
             opened={opened}
             close={close}
             />
-        </>
+        </Stack>
     )
 }

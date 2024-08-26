@@ -4,6 +4,12 @@ interface AuthState {
     name: string
     img: string
     isLogged: boolean
+    setAuth: (newAuth: AuthState) => void
+}
+
+interface QRState {
+    link: string
+    setLink: (newLink: string) => void
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -14,5 +20,12 @@ export const useAuthStore = create<AuthState>((set) => ({
         name: newAuth.name,
         img: newAuth.img,
         isLogged: newAuth.isLogged
+    }))
+}))
+
+export const useQRStore = create<QRState>((set) => ({
+    link: '',
+    setLink: (newLink: string) => set(() => ({
+        link: newLink
     }))
 }))
