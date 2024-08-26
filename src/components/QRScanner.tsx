@@ -1,6 +1,7 @@
 import { 
     Button,
     Divider,
+    FileButton,
     Stack,
     Title,
     rem
@@ -8,10 +9,31 @@ import {
 import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { IconCamera, IconUpload } from "@tabler/icons-react";
 import { ScannerModal } from "./ScannerModal";
+import { Html5Qrcode, Html5QrcodeResult } from "html5-qrcode";
+import { notifications } from '@mantine/notifications';
+import { useQRStore } from "../zustand";
 
 export function QRScanner () {
 
     const [opened, { open, close }] = useDisclosure(false);
+    const setLink = useQRStore((state) => state.setLink)
+
+    const checkFile = async (newFile: File | null) => {
+        if (newFile) {
+            try {
+                const scanner = new Html5Qrcode("qr-reader");
+                const result: Html5QrcodeResult = await scanner.scanFileV2(newFile, false);
+                console.log(result);
+                setLink(result.decodedText)
+            } catch (e) {
+                console.log(e)
+                notifications.show({
+                    title: 'Error',
+                    message: 'Code Not Found'
+                })
+            }
+        }
+    }
 
     const { width } = useViewportSize()
 
@@ -19,7 +41,6 @@ export function QRScanner () {
         <Stack w="100%" justify="center" align="center">
             <Button
                 p="sm"
-                // bd="3px dashed"
                 mx="lg"
                 radius="xl"
                 variant="outline"
@@ -34,19 +55,30 @@ export function QRScanner () {
                 </Stack>
             </Button>
             <Divider label="or" w="100%" />
-            <Button
-                leftSection={<IconUpload />}
-                fullWidth
-                size="xl"
-                radius="xl"
-                variant="outline"
+            <FileButton
+                onChange={checkFile} 
+                accept="image/png,image/jpeg"
                 >
-                Upload
-            </Button>
+                {(props) => 
+                <Button
+                    leftSection={<IconUpload />}
+                    fullWidth
+                    size="xl"
+                    radius="xl"
+                    variant="outline"
+                    {...props}
+                    >
+                    Upload
+                </Button>}
+            </FileButton>
+            <div 
+                id="qr-reader" 
+                style={{ display: 'none' }} 
+                />
             <ScannerModal
-            opened={opened}
-            close={close}
-            />
+                opened={opened}
+                close={close}
+                />
         </Stack>
     )
 }

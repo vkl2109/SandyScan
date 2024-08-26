@@ -1,5 +1,8 @@
 import { 
+    Box,
     Button,
+    CopyButton,
+    Group,
     Input, 
     LoadingOverlay, 
     Stack,
@@ -8,9 +11,15 @@ import {
 import { isNotEmpty, useForm } from "@mantine/form"
 import { useState } from "react";
 import { notifications } from '@mantine/notifications';
+import { useQRStore } from "../zustand";
+import QRCode from "react-qr-code";
+import { IconCheck, IconCopy } from "@tabler/icons-react";
 
 export function QRForm () {
     const [ addingQRCode, setAddingQRCode ] = useState(false)
+
+    const link = useQRStore((state) => state.link)
+    const setLink = useQRStore((state) => state.setLink)
 
     const form = useForm({
         mode: 'uncontrolled',
@@ -58,6 +67,34 @@ export function QRForm () {
                 align="center"
                 >
                 <LoadingOverlay visible={addingQRCode} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} />
+                <Group justify="space-between" w="100%">
+                    <CopyButton value={link}>
+                    {({ copied, copy }) => (
+                        <Button 
+                            onClick={copy}
+                            leftSection={
+                                copied ?
+                                <IconCheck />
+                                :
+                                <IconCopy />
+                            }
+                            variant="light"
+                            color={copied ? 'teal' : 'blue'}
+                            >
+                            {copied ? 'Copied' : 'Copy'}
+                        </Button>
+                    )}
+                    </CopyButton>
+                    <Button 
+                        variant="subtle"
+                        onClick={() => setLink('')}>
+                        Clear
+                    </Button>
+                </Group>
+                <QRCode
+                    value={link}
+                    style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                    />
                 <Input
                     size="lg"
                     w="100%"

@@ -13,6 +13,7 @@ import {
 import logo from '/vite.svg'
 import { useViewportSize } from '@mantine/hooks';
 import { useMemo } from 'react';
+import { useAuthStore } from '../zustand';
 
 export function RootHeader () {
     const { width } = useViewportSize();
@@ -20,6 +21,8 @@ export function RootHeader () {
     const cardWidth = useMemo(() => {
         return width < 400 ? (width - 10) : 400
     },[width])
+
+    const isLoggedIn = useAuthStore((state) => state.isLogged)
 
     return(
         <Group
@@ -33,8 +36,14 @@ export function RootHeader () {
                 h={rem(50)}
                 w={rem(50)}
                 />
-                <Title visibleFrom="sm">Sandy Scan</Title>
+                <Title 
+                    visibleFrom="sm"
+                    c="blue"
+                    >
+                    Sandy Scan
+                </Title>
             </Group>
+            {isLoggedIn ?
             <HoverCard width={cardWidth} shadow="md" openDelay={200} closeDelay={400}>
                 <HoverCard.Target>
                     <Avatar radius="xl" size="lg" />
@@ -50,6 +59,15 @@ export function RootHeader () {
                     </Stack>
                 </HoverCard.Dropdown>
             </HoverCard>
+            :
+            <Button
+                size="xl"
+                variant="light"
+                radius="md"
+                >
+                Sign In
+            </Button>
+            }
         </Group>
     )
 }

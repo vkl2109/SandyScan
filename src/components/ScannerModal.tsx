@@ -15,6 +15,7 @@ import {
 import { Html5Qrcode, Html5QrcodeResult } from "html5-qrcode";
 import { IconMinus, IconPlus, IconX } from "@tabler/icons-react";
 import { Scan } from './Scan'
+import { useQRStore } from "../zustand";
 
 interface ScannerModalProps {
     opened: boolean;
@@ -28,6 +29,8 @@ export function ScannerModal({ opened, close }: ScannerModalProps) {
     const [ zoom, setZoom ] = useState(1);
     const [stream, setStream] = useState<MediaStream | null>(null);
     const [qrScanner, setQrScanner] = useState<Html5Qrcode | null>(null);
+
+    const setLink = useQRStore((state) => state.setLink)
 
     useEffect(() => {
         const getVideo = async () => {
@@ -87,6 +90,11 @@ export function ScannerModal({ opened, close }: ScannerModalProps) {
                             });
                             const result: Html5QrcodeResult = await qrScanner.scanFileV2(file, false);
                             console.log(result);
+                            setLink(result.decodedText)
+                            if (stream) {
+                                stream.getTracks().forEach((track: { stop: () => any; }) => track.stop());
+                                setStream(null);
+                            }
                             close();
                         } catch (err) {
                         }
