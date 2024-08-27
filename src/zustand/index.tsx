@@ -7,11 +7,6 @@ interface AuthState {
     setAuth: (newAuth: AuthState) => void
 }
 
-interface QRState {
-    link: string
-    setLink: (newLink: string) => void
-}
-
 export const useAuthStore = create<AuthState>((set) => ({
     name: '',
     img: '',
@@ -23,9 +18,26 @@ export const useAuthStore = create<AuthState>((set) => ({
     }))
 }))
 
+interface QRState {
+    link: string
+    setLink: (newLink: string) => void
+}
+
 export const useQRStore = create<QRState>((set) => ({
     link: '',
     setLink: (newLink: string) => set(() => ({
         link: newLink
+    }))
+}))
+
+interface SearchState {
+    search: string,
+    setSearch: (newSearch: string) => void
+}
+
+export const useSearchStore = create<SearchState>((set) => ({
+    search: '',
+    setSearch: (newSearch: string) => set(() => ({
+        search: newSearch
     }))
 }))
