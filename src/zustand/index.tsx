@@ -41,3 +41,15 @@ export const useSearchStore = create<SearchState>((set) => ({
         search: newSearch
     }))
 }))
+
+interface OpenScanState {
+    openScan: boolean,
+    toggle: () => void,
+}
+
+export const useOpenScanStore = create<OpenScanState>((set) => ({
+    openScan: false,
+    toggle: () => set((state) => ({
+        openScan: !state.openScan
+    }))
+}))

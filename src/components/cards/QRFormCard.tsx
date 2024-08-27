@@ -18,8 +18,7 @@ import { IconCheck, IconCopy } from "@tabler/icons-react";
 export function QRFormCard () {
     const [ addingQRCode, setAddingQRCode ] = useState(false)
 
-    const link = useQRStore((state) => state.link)
-    const setLink = useQRStore((state) => state.setLink)
+    const [link, setLink] = useQRStore((state) => [state.link, state.setLink])
 
     const form = useForm({
         mode: 'uncontrolled',

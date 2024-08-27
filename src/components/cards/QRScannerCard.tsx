@@ -1,4 +1,5 @@
 import { 
+    ActionIcon,
     Button,
     Card,
     Divider,
@@ -8,16 +9,20 @@ import {
     rem
 } from "@mantine/core";
 import { useDisclosure, useViewportSize } from "@mantine/hooks";
-import { IconCamera, IconUpload } from "@tabler/icons-react";
+import { 
+    IconCamera, 
+    IconUpload 
+} from "@tabler/icons-react";
 import { ScannerModal } from "../ScannerModal";
 import { Html5Qrcode, Html5QrcodeResult } from "html5-qrcode";
 import { notifications } from '@mantine/notifications';
-import { useQRStore } from "../../zustand";
+import { useOpenScanStore, useQRStore } from "../../zustand";
 
 export function QRScannerCard () {
 
     const [opened, { open, close }] = useDisclosure(false);
     const setLink = useQRStore((state) => state.setLink)
+    const toggle = useOpenScanStore((state) => state.toggle)
 
     const checkFile = async (newFile: File | null) => {
         if (newFile) {
@@ -41,7 +46,8 @@ export function QRScannerCard () {
     return(
         <Card 
             shadow="sm" 
-            p="xl" 
+            px="xl" 
+            pt="xl"
             radius="xl"
             w="100%"
             >
@@ -71,13 +77,24 @@ export function QRScannerCard () {
                         leftSection={<IconUpload />}
                         fullWidth
                         size="xl"
-                        radius="xl"
+                        radius="lg"
                         variant="outline"
                         {...props}
                         >
                         Upload
                     </Button>}
                 </FileButton>
+                <ActionIcon 
+                    variant="transparent"
+                    onClick={toggle}
+                    w="25%"
+                    >
+                    <Divider 
+                        w="100%"
+                        c="blue"
+                        size="xl"
+                        />
+                </ActionIcon>
                 <div 
                     id="qr-reader" 
                     style={{ display: 'none' }} 
