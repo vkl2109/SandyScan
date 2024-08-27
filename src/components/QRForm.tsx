@@ -1,5 +1,4 @@
 import { 
-    Box,
     Button,
     CopyButton,
     Group,
@@ -115,7 +114,7 @@ export function QRForm () {
                     fullWidth
                     disabled={form.getValues().name == ''}
                     >
-                    Add QR Code
+                    Save Code
                 </Button>
             </Stack>
         </form>

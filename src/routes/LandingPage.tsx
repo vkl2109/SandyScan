@@ -19,23 +19,29 @@ export function LandingPage () {
 
     return(
         <Stack 
-            p="lg" 
-            justify="flex-start"
+            justify="center"
             align="center"
+            w="100%"
+            h="100%"
             >
-            <Card 
-                shadow="sm" 
-                p="xl" 
+            <Stack
+                p="md"
                 w={rem(400)}
-                maw={width - 100}
-                radius="xl"
+                maw={width}
                 >
-                {link == '' ?
-                <QRScanner />
-                :
-                <QRForm />
-                }
-            </Card>
+                <Card 
+                    shadow="sm" 
+                    p="xl" 
+                    radius="xl"
+                    w="100%"
+                    >
+                    {link == '' ?
+                    <QRScanner />
+                    :
+                    <QRForm />
+                    }
+                </Card>
+            </Stack>
         </Stack>
     )
 }
