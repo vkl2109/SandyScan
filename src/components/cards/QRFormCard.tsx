@@ -11,14 +11,18 @@ import {
 import { isNotEmpty, useForm } from "@mantine/form"
 import { useState } from "react";
 import { notifications } from '@mantine/notifications';
-import { useQRStore } from "../../zustand";
+import { useAuthStore, useQRStore } from "../../zustand";
 import QRCode from "react-qr-code";
 import { IconCheck, IconCopy } from "@tabler/icons-react";
+import { v4 as uuidv4 } from 'uuid';
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../../firebase";
 
 export function QRFormCard () {
     const [ addingQRCode, setAddingQRCode ] = useState(false)
 
     const [link, setLink] = useQRStore((state) => [state.link, state.setLink])
+    const uid = useAuthStore((state) => state.uid)
 
     const form = useForm({
         mode: 'uncontrolled',
@@ -36,16 +40,19 @@ export function QRFormCard () {
         try {
             setAddingQRCode(true)
             console.log(values)
-            // const newContactID = uuidv4()
-            // await setDoc(doc(db, 'contact', newContactID), {
-            //     name: values.name,
-            //     notes: values.notes,
-            // })
+            const newCodeID = uuidv4()
+            await setDoc(doc(db, 'users', uid, 'codes', newCodeID), {
+                name: values.name,
+                notes: values.notes,
+                link: link,
+                category: 'general',
+            })
             notifications.show({
-                title: 'Message Submitted',
-                message: 'Thanks for reaching out!',
+                title: 'Success',
+                message: 'Code Saved',
             })
             form.reset()
+            setLink('')
         }
         catch (e) {
             console.log(e)

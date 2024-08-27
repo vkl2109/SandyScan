@@ -32,15 +32,18 @@ export function RootHeader () {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
+                console.log(user)
                 setAuth({
                     name: user?.displayName || '',
                     img: user?.photoURL || '',
+                    uid: user?.uid || '',
                     isLogged: true
                 })
             } else {
                 setAuth({
                     name: '',
                     img: '',
+                    uid: '',
                     isLogged: false
                 })
             }

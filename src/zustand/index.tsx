@@ -3,6 +3,7 @@ import { create } from 'zustand'
 interface AuthState {
     name: string
     img: string
+    uid: string
     isLogged: boolean
     setAuth: (newAuth: NewAuthState) => void
 }
@@ -10,16 +11,19 @@ interface AuthState {
 interface NewAuthState {
     name: string | undefined
     img: string | undefined
+    uid: string | undefined
     isLogged: boolean
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
     name: '',
     img: '',
+    uid: '',
     isLogged: false,
     setAuth: (newAuth: NewAuthState) => set(() => ({
         name: newAuth.name,
         img: newAuth.img,
+        uid: newAuth.uid,
         isLogged: newAuth.isLogged
     }))
 }))
