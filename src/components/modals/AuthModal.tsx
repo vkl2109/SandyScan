@@ -2,14 +2,17 @@ import { Button, Modal, Stack, Text } from "@mantine/core";
 import { useOpenAuthStore } from "../../zustand";
 import { GoogleIcon } from "../utility";
 import { notifications } from "@mantine/notifications";
-
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from '../../../firebase'
 
 export function AuthModal () {
     const [ openAuth, close ] = useOpenAuthStore((state) => [state.openAuth, state.close])
+    const provider = new GoogleAuthProvider();
 
     const handleGoogleAuth = async () => {
         try {
-            
+            await signInWithPopup(auth, provider)
+            close()
         } catch (e) {
             console.log(e)
             notifications.show({
@@ -45,7 +48,7 @@ export function AuthModal () {
                 <Text
                     fw="bold"
                     >
-                    Sign in to save your codes!
+                    Save your codes!
                 </Text>
             </Stack>
         </Modal>

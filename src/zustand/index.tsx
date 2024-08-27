@@ -4,14 +4,20 @@ interface AuthState {
     name: string
     img: string
     isLogged: boolean
-    setAuth: (newAuth: AuthState) => void
+    setAuth: (newAuth: NewAuthState) => void
+}
+
+interface NewAuthState {
+    name: string | undefined
+    img: string | undefined
+    isLogged: boolean
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
     name: '',
     img: '',
     isLogged: false,
-    setAuth: (newAuth: AuthState) => set(() => ({
+    setAuth: (newAuth: NewAuthState) => set(() => ({
         name: newAuth.name,
         img: newAuth.img,
         isLogged: newAuth.isLogged

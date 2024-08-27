@@ -12,9 +12,12 @@ import {
 } from '@mantine/core'
 import logo from '/vite.svg'
 import { useViewportSize } from '@mantine/hooks';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useAuthStore, useOpenAuthStore } from '../zustand';
 import { AuthModal } from '../components';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { auth } from '../../firebase';
+import { notifications } from '@mantine/notifications';
 
 export function RootHeader () {
     const { width } = useViewportSize();
@@ -23,8 +26,40 @@ export function RootHeader () {
         return width < 400 ? (width - 10) : 400
     },[width])
 
-    const isLoggedIn = useAuthStore((state) => state.isLogged)
+    const [name, img, isLoggedIn, setAuth] = useAuthStore((state) => [state.name, state.img, state.isLogged, state.setAuth])
     const openAuth = useOpenAuthStore((state) => state.open)
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setAuth({
+                    name: user?.displayName || '',
+                    img: user?.photoURL || '',
+                    isLogged: true
+                })
+            } else {
+                setAuth({
+                    name: '',
+                    img: '',
+                    isLogged: false
+                })
+            }
+        })
+
+        return () => unsubscribe()
+    },[])
+
+    const handleSignOut = async () => {
+        try {
+            await signOut(auth)
+        } catch (e) {
+            console.log(e)
+            notifications.show({
+                title: 'Error',
+                message: 'Please Try Again'
+            })
+        }
+    }
 
     return(
         <Group
@@ -48,14 +83,32 @@ export function RootHeader () {
             {isLoggedIn ?
             <HoverCard width={cardWidth} shadow="md" openDelay={200} closeDelay={400}>
                 <HoverCard.Target>
-                    <Avatar radius="xl" size="lg" />
+                    <Avatar 
+                        radius="xl" 
+                        size="lg" 
+                        src={img}
+                        />
                 </HoverCard.Target>
                 <HoverCard.Dropdown>
                     <Stack justify="center" align="center">
-                        <Avatar size="xl" radius={rem(100)} />
-                        <Text>Insert Name</Text>
+                        <Avatar 
+                            size="xl" 
+                            radius={rem(100)} 
+                            src={img}
+                            />
+                        <Text
+                            fw="lighter"
+                            size="xl"
+                            >
+                            {name}
+                        </Text>
                         <Divider w="100%"/>
-                        <Button fullWidth size="xl" variant="subtle">
+                        <Button 
+                            fullWidth 
+                            size="xl" 
+                            variant="subtle"
+                            onClick={handleSignOut}
+                            >
                             Sign Out
                         </Button>
                     </Stack>
