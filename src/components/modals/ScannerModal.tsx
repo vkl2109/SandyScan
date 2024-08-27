@@ -14,8 +14,8 @@ import {
 } from "react";
 import { Html5Qrcode, Html5QrcodeResult } from "html5-qrcode";
 import { IconMinus, IconPlus, IconX } from "@tabler/icons-react";
-import { Scan } from './Scan'
-import { useQRStore } from "../zustand";
+import { Scan } from '../Scan'
+import { useQRStore } from "../../zustand";
 
 interface ScannerModalProps {
     opened: boolean;

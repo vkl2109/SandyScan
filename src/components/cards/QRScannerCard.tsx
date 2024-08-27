@@ -13,7 +13,7 @@ import {
     IconCamera, 
     IconUpload 
 } from "@tabler/icons-react";
-import { ScannerModal } from "../ScannerModal";
+import { ScannerModal } from "../modals/ScannerModal";
 import { Html5Qrcode, Html5QrcodeResult } from "html5-qrcode";
 import { notifications } from '@mantine/notifications';
 import { useOpenScanStore, useQRStore } from "../../zustand";
