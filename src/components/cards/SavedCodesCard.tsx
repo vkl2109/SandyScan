@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { CodeCard } from "./CodeCard";
+import classes from './CodeCard.module.css'
 
 export function SavedCodesCard () {
     const [ search, setSearch ] = useSearchStore((state) => [state.search, state.setSearch])
@@ -69,7 +70,11 @@ export function SavedCodesCard () {
                     Sign In for your codes...
                 </Text>
                 }
-                <Accordion w="100%">
+                <Accordion 
+                    w="100%" 
+                    radius="md"
+                    classNames={classes}
+                    >
                     {codes.map((code) => {
                         return(
                             <CodeCard code={code}/>

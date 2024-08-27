@@ -1,12 +1,18 @@
 import { 
     Accordion,
     ActionIcon, 
+    Anchor, 
+    Button, 
+    CopyButton, 
     Divider, 
     Group, 
     Stack, 
     Text 
 } from "@mantine/core"
 import {
+    IconCheck,
+    IconCopy,
+    IconExternalLink,
     IconPencil, 
     IconQrcode, 
     IconTrash 
@@ -36,6 +42,43 @@ export function CodeCard ({
                     align="center"
                     gap={0}
                     >
+                    <Group 
+                        w="100%"
+                        justify="space-between"
+                        align="center"
+                        >
+                        <CopyButton value={code.link}>
+                        {({ copied, copy }) => (
+                            <Button 
+                                onClick={copy}
+                                leftSection={
+                                    copied ?
+                                    <IconCheck size={15} />
+                                    :
+                                    <IconCopy size={15} />
+                                }
+                                variant="light"
+                                size="xs"
+                                color={copied ? 'teal' : 'blue'}
+                                >
+                                {copied ? 'Copied' : 'Copy'}
+                            </Button>
+                        )}
+                        </CopyButton>
+                        <Anchor
+                            href={code.link}
+                            target="_blank"
+                            >
+                            <Button
+                                size="xs"
+                                variant="outline"
+                                rightSection={<IconExternalLink size={15} />}
+
+                                >
+                                Open
+                            </Button>
+                        </Anchor>
+                    </Group>
                     <Divider 
                         w="100%" 
                         m="xs"
