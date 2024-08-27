@@ -53,3 +53,19 @@ export const useOpenScanStore = create<OpenScanState>((set) => ({
         openScan: !state.openScan
     }))
 }))
+
+interface OpenAuthState {
+    openAuth: boolean,
+    open: () => void,
+    close: () => void,
+}
+
+export const useOpenAuthStore = create<OpenAuthState>((set) => ({
+    openAuth: false,
+    open: () => set(() => ({
+        openAuth: true
+    })),
+    close: () => set(() =>({
+        openAuth: false
+    }))
+}))

@@ -1,5 +1,5 @@
 import { Button, Card } from "@mantine/core";
-import { IconCamera } from "@tabler/icons-react";
+import { IconPlus } from "@tabler/icons-react";
 import { useOpenScanStore } from "../../zustand";
 
 
@@ -16,11 +16,11 @@ export function OpenScanCard () {
                 variant="light"
                 size="xl"
                 radius="lg"
-                leftSection={<IconCamera />}
+                leftSection={<IconPlus />}
                 fullWidth
                 onClick={toggle}
                 >
-                Scan
+                Add Code
             </Button>
         </Card>
     )
