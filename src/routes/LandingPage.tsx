@@ -1,14 +1,16 @@
 import { 
     Card, 
     Stack,
+    TextInput,
     rem
 } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import {
-    QRScanner,
-    QRForm
+    QRScannerCard,
+    QRFormCard
 } from '../components'
 import { useQRStore } from "../zustand";
+import { IconSearch } from "@tabler/icons-react";
 // import { v4 as uuidv4 } from 'uuid';
 
 export function LandingPage () {
@@ -29,17 +31,23 @@ export function LandingPage () {
                 w={rem(400)}
                 maw={width}
                 >
-                <Card 
+                {link == '' ?
+                <QRScannerCard />
+                :
+                <QRFormCard />
+                }
+                <Card
                     shadow="sm" 
                     p="xl" 
                     radius="xl"
                     w="100%"
                     >
-                    {link == '' ?
-                    <QRScanner />
-                    :
-                    <QRForm />
-                    }
+                    <TextInput 
+                        size="xl"
+                        radius="xl"
+                        placeholder="search"
+                        leftSection={<IconSearch />}
+                        />
                 </Card>
             </Stack>
         </Stack>

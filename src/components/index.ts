@@ -1,2 +1,1 @@
-export * from './QRScanner'
-export * from './QRForm'
+export * from './cards'
