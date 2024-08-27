@@ -1,5 +1,4 @@
 import { 
-    Button,
     Stack,
     rem
 } from "@mantine/core";
@@ -7,10 +6,10 @@ import { useViewportSize } from "@mantine/hooks";
 import {
     QRScannerCard,
     QRFormCard,
-    SavedCodesCard
+    SavedCodesCard,
+    OpenScanCard
 } from '../components'
 import { useOpenScanStore, useQRStore } from "../zustand";
-import { IconCamera } from "@tabler/icons-react";
 // import { v4 as uuidv4 } from 'uuid';
 
 export function LandingPage () {
@@ -18,7 +17,7 @@ export function LandingPage () {
     const { width } = useViewportSize()
 
     const link = useQRStore((state) => state.link)
-    const [ openScan, toggle ] = useOpenScanStore((state) => [state.openScan, state.toggle])
+    const openScan = useOpenScanStore((state) => state.openScan)
 
     return(
         <Stack 
@@ -36,16 +35,7 @@ export function LandingPage () {
                 (openScan ?
                     <QRScannerCard />
                     :
-                    <Button 
-                        variant="light"
-                        size="xl"
-                        radius="lg"
-                        leftSection={<IconCamera />}
-                        fullWidth
-                        onClick={toggle}
-                        >
-                        Scan
-                    </Button>
+                    <OpenScanCard />
                 )
                 :
                 <QRFormCard />
