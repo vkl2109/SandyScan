@@ -3,9 +3,9 @@ import {
     Card,
     CopyButton,
     Group,
-    Input, 
     LoadingOverlay, 
     Stack,
+    TextInput,
     Textarea,
 } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form"
@@ -17,12 +17,14 @@ import { IconCheck, IconCopy } from "@tabler/icons-react";
 import { v4 as uuidv4 } from 'uuid';
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
+import { ColorPicker } from "../utility";
 
 export function QRFormCard () {
     const [ addingQRCode, setAddingQRCode ] = useState(false)
 
     const [link, setLink] = useQRStore((state) => [state.link, state.setLink])
     const uid = useAuthStore((state) => state.uid)
+    const [ localColor, setLocalColor ] = useState('blue')
 
     const form = useForm({
         mode: 'uncontrolled',
@@ -45,7 +47,7 @@ export function QRFormCard () {
                 name: values.name,
                 notes: values.notes,
                 link: link,
-                category: 'general',
+                color: localColor == '' ? 'blue': localColor,
             })
             notifications.show({
                 title: 'Success',
@@ -121,7 +123,7 @@ export function QRFormCard () {
                             Clear
                         </Button>
                     </Group>
-                    <Input
+                    <TextInput
                         size="lg"
                         w="100%"
                         placeholder="name"
@@ -132,6 +134,10 @@ export function QRFormCard () {
                         w="100%"
                         placeholder="notes"
                         {...form.getInputProps('notes')}
+                        />
+                    <ColorPicker
+                        current={localColor}
+                        setCurrent={setLocalColor}
                         />
                     <Button 
                         size="lg" 

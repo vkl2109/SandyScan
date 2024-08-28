@@ -15,6 +15,7 @@ import { useState } from "react";
 import { useAuthStore } from "../../zustand";
 import { notifications } from "@mantine/notifications";
 import { IconCloudUpload, IconReload } from "@tabler/icons-react";
+import { ColorPicker } from "../utility";
 
 interface CodeStateProps {
     id: string;
@@ -33,6 +34,7 @@ export function EditModal({ opened, close, code }: EditModalProps) {
     const [ addingQRCode, setAddingQRCode ] = useState(false)
     const [ localName, setLocalName ] = useState(code.name)
     const [ localNotes, setLocalNotes ] = useState(code.notes)
+    const [ localColor, setLocalColor ] = useState(code.color)
 
     const uid = useAuthStore((state) => state.uid)
 
@@ -43,7 +45,7 @@ export function EditModal({ opened, close, code }: EditModalProps) {
             await updateDoc(doc(db, 'users', uid, 'codes', code.id), {
                 name: localName,
                 notes: localNotes,
-                category: 'general',
+                color: localColor == '' ? code.color : localColor,
             })
             notifications.show({
                 title: 'Success',
@@ -66,6 +68,7 @@ export function EditModal({ opened, close, code }: EditModalProps) {
     const handleReset = () => {
         setLocalName(code.name)
         setLocalNotes(code.notes)
+        setLocalColor(code.color)
     }
 
     return(
@@ -87,7 +90,7 @@ export function EditModal({ opened, close, code }: EditModalProps) {
                 <Title 
                     order={1}
                     >
-                    Edit Code
+                    Edit
                 </Title>
                 <Divider w="100%" mt="-xs" />
                 <LoadingOverlay 
@@ -113,6 +116,10 @@ export function EditModal({ opened, close, code }: EditModalProps) {
                     placeholder="notes"
                     value={localNotes}
                     onChange={(event) => setLocalNotes(event.currentTarget.value)}
+                    />
+                <ColorPicker
+                    current={localColor}
+                    setCurrent={setLocalColor}
                     />
                 <Group 
                     w="100%"

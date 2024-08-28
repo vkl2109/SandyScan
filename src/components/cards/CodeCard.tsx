@@ -20,7 +20,7 @@ import {
     IconPencil, 
     IconTrash
 } from "@tabler/icons-react"
-import { EditModal, ViewCodeModal } from '../modals'
+import { DeleteModal, EditModal, ViewCodeModal } from '../modals'
 import { 
     ColorType,
     ColorMap
@@ -46,6 +46,7 @@ export function CodeCard ({
 }: CodeCardState) {
     const [openedEdit, { open: openEdit, close: closeEdit }] = useDisclosure(false)
     const [openedViewCode, { open: openViewCode, close: closeViewCode }] = useDisclosure(false)
+    const [openedDelete, { open: openDelete, close: closeDelete }] = useDisclosure(false)
 
     const [ opened, setOpened ] = useState(false)
 
@@ -148,6 +149,7 @@ export function CodeCard ({
                             <ActionIcon
                                 c="red"
                                 variant="transparent"
+                                onClick={openDelete}
                                 >
                                 <IconTrash />
                             </ActionIcon>
@@ -163,6 +165,12 @@ export function CodeCard ({
                         close={closeViewCode}
                         name={code.name}
                         link={code.link}
+                        />
+                    <DeleteModal
+                        opened={openedDelete}
+                        close={closeDelete}
+                        uid={code.id}
+                        name={code.name}
                         />
                 </Stack>
             </Accordion.Panel>
