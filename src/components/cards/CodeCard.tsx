@@ -8,7 +8,8 @@ import {
     Divider, 
     Group, 
     Stack, 
-    Text
+    Text,
+    Transition
 } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
 import {
@@ -24,6 +25,7 @@ import {
     ColorType,
     ColorMap
 } from "../utility";
+import { useEffect, useState } from "react";
 
 interface CodeStateProps {
     id: string;
@@ -34,19 +36,38 @@ interface CodeStateProps {
 }
 
 interface CodeCardState {
-    code: CodeStateProps
+    code: CodeStateProps;
+    k: number;
 }
 
 export function CodeCard ({
-    code
+    code,
+    k
 }: CodeCardState) {
     const [openedEdit, { open: openEdit, close: closeEdit }] = useDisclosure(false)
     const [openedViewCode, { open: openViewCode, close: closeViewCode }] = useDisclosure(false)
 
+    const [ opened, setOpened ] = useState(false)
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setOpened(true)
+        }, k * 100)
+        return () => clearTimeout(timer);
+    },[k])
+
     return(
+        <Transition
+            mounted={opened}
+            transition="slide-left"
+            duration={400}
+            timingFunction="ease"
+            >
+        {(styles) => 
         <Accordion.Item
             key={code.id}
             value={code.id}
+            style={styles}
             >
             <Accordion.Control
                 icon={<ColorSwatch color={ColorMap[code.color]}/>}
@@ -146,5 +167,7 @@ export function CodeCard ({
                 </Stack>
             </Accordion.Panel>
         </Accordion.Item>
+        }
+        </Transition>
     )
 }

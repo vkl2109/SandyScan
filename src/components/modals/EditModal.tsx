@@ -1,11 +1,13 @@
 import { 
     Button, 
+    Divider, 
     Group, 
     LoadingOverlay, 
     Modal, 
     Stack, 
     TextInput, 
-    Textarea 
+    Textarea, 
+    Title
 } from "@mantine/core";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
@@ -72,13 +74,22 @@ export function EditModal({ opened, close, code }: EditModalProps) {
             onClose={close}
             centered
             radius="lg"
+            withCloseButton={false}
             transitionProps={{ transition: 'fade', duration: 200 }}
             >
             <Stack
                 w="100%"
                 justify="center"
                 align="center"
+                ta="start"
+                gap="md"
                 >
+                <Title 
+                    order={1}
+                    >
+                    Edit Code
+                </Title>
+                <Divider w="100%" mt="-xs" />
                 <LoadingOverlay 
                     visible={addingQRCode} 
                     zIndex={1000} 
@@ -110,12 +121,16 @@ export function EditModal({ opened, close, code }: EditModalProps) {
                     >
                     <Button 
                         variant="outline"
+                        w="47.5%"
+                        size="xl"
                         onClick={handleReset}
                         leftSection={<IconReload size={20} />}
                         >
                         Reset
                     </Button>
                     <Button
+                        w="47.5%"
+                        size="xl"
                         onClick={handleSubmit}
                         rightSection={<IconCloudUpload size={20} />}
                         >

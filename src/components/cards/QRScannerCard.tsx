@@ -6,6 +6,7 @@ import {
     FileButton,
     Stack,
     Title,
+    Transition,
     rem
 } from "@mantine/core";
 import { useDisclosure, useViewportSize } from "@mantine/hooks";
@@ -17,6 +18,7 @@ import { ScannerModal } from "../modals/ScannerModal";
 import { Html5Qrcode, Html5QrcodeResult } from "html5-qrcode";
 import { notifications } from '@mantine/notifications';
 import { useOpenScanStore, useQRStore } from "../../zustand";
+import { useEffect, useState } from "react";
 
 export function QRScannerCard () {
 
@@ -43,13 +45,32 @@ export function QRScannerCard () {
 
     const { width } = useViewportSize()
 
+    const [ openedTransition, setOpenedTransition ] = useState(false)
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setOpenedTransition(true)
+        }, 0)
+        return () => clearTimeout(timer);
+    },[])
+
     return(
+        <Transition
+            mounted={openedTransition}
+            transition="slide-down"
+            duration={400}
+            timingFunction="ease"
+            exitDelay={300}
+            >
+            
+            {(styles) => 
         <Card 
             shadow="sm" 
             px="xl" 
             pt="xl"
             radius="xl"
             w="100%"
+            style={styles}
             >
             <Stack w="100%" justify="center" align="center">
                 <Button
@@ -105,5 +126,7 @@ export function QRScannerCard () {
                     />
             </Stack>
         </Card>
+        }
+    </Transition>
     )
 }

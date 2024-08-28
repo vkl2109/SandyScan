@@ -15,6 +15,7 @@ import { collection, onSnapshot, query } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { CodeCard } from "./CodeCard";
 import classes from './CodeCard.module.css'
+import { ColorPicker } from "../utility";
 
 export function SavedCodesCard () {
     const [ search, setSearch ] = useSearchStore((state) => [state.search, state.setSearch])
@@ -63,25 +64,33 @@ export function SavedCodesCard () {
                     value={search}
                     onChange={(event) => setSearch(event.currentTarget.value)}
                     />
-                {!loggedIn && 
+                {!loggedIn ? 
                 <Text
                     fs="italic"
                     fw="lighter"
                     >
                     Sign In for your codes...
                 </Text>
+                :
+                <>
+                    <ColorPicker />
+                    <Accordion 
+                        w="100%" 
+                        radius="md"
+                        classNames={classes}
+                        >
+                        {codes.map((code, i) => {
+                            return(
+                                <CodeCard 
+                                    key={code.id} 
+                                    k={i}
+                                    code={code}
+                                    />
+                            )
+                        })}
+                    </Accordion>
+                </>
                 }
-                <Accordion 
-                    w="100%" 
-                    radius="md"
-                    classNames={classes}
-                    >
-                    {codes.map((code) => {
-                        return(
-                            <CodeCard key ={code.id} code={code}/>
-                        )
-                    })}
-                </Accordion>
             </Stack>
         </Card>
     )

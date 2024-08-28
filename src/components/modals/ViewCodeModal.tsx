@@ -63,7 +63,8 @@ export function ViewCodeModal({opened, close, name, link}: ViewCodeModalProps) {
             opened={opened}
             onClose={close}
             centered
-            radius="lg"
+            radius="xs"
+            withCloseButton={false}
             transitionProps={{ transition: 'fade', duration: 200 }}
             >
             <Stack
@@ -71,7 +72,13 @@ export function ViewCodeModal({opened, close, name, link}: ViewCodeModalProps) {
                 align="center"
                 w="100%"
                 >
-                <div ref={qrRef}>
+                <div ref={qrRef}
+                    style={{ 
+                        height: "auto", 
+                        maxWidth: "100%", 
+                        width: "100%" 
+                    }}
+                    >
                     <QRCode
                         value={link}
                         style={{ 
