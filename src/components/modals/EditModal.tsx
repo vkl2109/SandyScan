@@ -129,7 +129,8 @@ export function EditModal({ opened, close, code }: EditModalProps) {
                     <Button 
                         variant="outline"
                         w="47.5%"
-                        size="xl"
+                        size="lg"
+                        radius="xl"
                         onClick={handleReset}
                         leftSection={<IconReload size={20} />}
                         >
@@ -137,7 +138,8 @@ export function EditModal({ opened, close, code }: EditModalProps) {
                     </Button>
                     <Button
                         w="47.5%"
-                        size="xl"
+                        size="lg"
+                        radius="xl"
                         onClick={handleSubmit}
                         rightSection={<IconCloudUpload size={20} />}
                         >

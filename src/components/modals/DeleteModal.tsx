@@ -42,7 +42,7 @@ export function DeleteModal ({
         opened={opened}
         onClose={close}
         withCloseButton={false}
-        radius="xl"
+        radius="lg"
         centered
         >
             <Stack
@@ -66,12 +66,13 @@ export function DeleteModal ({
                         w="47.5%"
                         radius="xl"
                         onClick={close}
+                        variant="outline"
                         >
                         Back
                     </Button>
                     <Button
-                        variant="light"
                         c="red"
+                        variant="light"
                         size="lg"
                         w="47.5%"
                         radius="xl"

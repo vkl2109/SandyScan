@@ -97,7 +97,9 @@ export function CodeCard ({
                                     <IconCopy size={15} />
                                 }
                                 variant="light"
-                                size="xs"
+                                size="sm"
+                                radius="xl"
+                                w="45%"
                                 color={copied ? 'teal' : 'blue'}
                                 >
                                 {copied ? 'Copied' : 'Copy'}
@@ -107,9 +109,12 @@ export function CodeCard ({
                         <Anchor
                             href={code.link}
                             target="_blank"
+                            w="45%"
                             >
                             <Button
-                                size="xs"
+                                size="sm"
+                                radius="xl"
+                                fullWidth
                                 variant="outline"
                                 rightSection={<IconExternalLink size={15} />}
 

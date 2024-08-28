@@ -96,6 +96,7 @@ export function ViewCodeModal({opened, close, name, link}: ViewCodeModalProps) {
                     <Button
                         variant="light"
                         size="lg"
+                        radius="xl"
                         w="45%"
                         leftSection={<IconShare2 />}
                         onClick={handleShare}
@@ -105,6 +106,7 @@ export function ViewCodeModal({opened, close, name, link}: ViewCodeModalProps) {
                     <Button
                         variant="light"
                         size="lg"
+                        radius="xl"
                         w="45%"
                         rightSection={<IconDownload />}
                         onClick={handleDownload}
