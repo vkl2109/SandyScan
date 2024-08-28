@@ -14,11 +14,17 @@ import { useAuthStore } from "../../zustand";
 import { notifications } from "@mantine/notifications";
 import { IconCloudUpload, IconReload } from "@tabler/icons-react";
 
+interface CodeStateProps {
+    id: string;
+    color: string;
+    name: string;
+    notes: string;
+}
 
 interface EditModalProps {
     opened: boolean;
     close: () => void;
-    code: any;
+    code: CodeStateProps;
 }
 
 export function EditModal({ opened, close, code }: EditModalProps) {

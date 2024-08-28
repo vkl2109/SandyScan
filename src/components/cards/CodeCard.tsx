@@ -3,6 +3,7 @@ import {
     ActionIcon, 
     Anchor, 
     Button, 
+    ColorSwatch, 
     CopyButton, 
     Divider, 
     Group, 
@@ -11,23 +12,36 @@ import {
 } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
 import {
+    IconArrowsMaximize,
     IconCheck,
     IconCopy,
     IconExternalLink,
     IconPencil, 
-    IconQrcode, 
-    IconTrash 
+    IconTrash
 } from "@tabler/icons-react"
-import { EditModal } from '../modals'
+import { EditModal, ViewCodeModal } from '../modals'
+import { 
+    ColorType,
+    ColorMap
+} from "../utility";
+
+interface CodeStateProps {
+    id: string;
+    color: ColorType;
+    name: string;
+    notes: string;
+    link: string;
+}
 
 interface CodeCardState {
-    code: any
+    code: CodeStateProps
 }
 
 export function CodeCard ({
     code
 }: CodeCardState) {
     const [openedEdit, { open: openEdit, close: closeEdit }] = useDisclosure(false)
+    const [openedViewCode, { open: openViewCode, close: closeViewCode }] = useDisclosure(false)
 
     return(
         <Accordion.Item
@@ -35,7 +49,7 @@ export function CodeCard ({
             value={code.id}
             >
             <Accordion.Control
-                icon={<IconQrcode />}
+                icon={<ColorSwatch color={ColorMap[code.color]}/>}
                 >
                 <Text>{code.name}</Text>
             </Accordion.Control>
@@ -92,26 +106,42 @@ export function CodeCard ({
                     </Text>
                     <Group
                         w="100%"
-                        justify="flex-end"
-                        gap="xs"
+                        justify="space-between"
                         >
                         <ActionIcon
                             variant="transparent"
-                            onClick={openEdit}
+                            onClick={openViewCode}
                             >
-                            <IconPencil />
+                            <IconArrowsMaximize />
                         </ActionIcon>
-                        <ActionIcon
-                            c="red"
-                            variant="transparent"
+                        <Group
+                            justify="flex-end"
+                            gap="xs"
                             >
-                            <IconTrash />
-                        </ActionIcon>
+                            <ActionIcon
+                                variant="transparent"
+                                onClick={openEdit}
+                                >
+                                <IconPencil />
+                            </ActionIcon>
+                            <ActionIcon
+                                c="red"
+                                variant="transparent"
+                                >
+                                <IconTrash />
+                            </ActionIcon>
+                        </Group>
                     </Group>
                     <EditModal 
                         opened={openedEdit}
                         close={closeEdit}
                         code={code}
+                        />
+                    <ViewCodeModal
+                        opened={openedViewCode}
+                        close={closeViewCode}
+                        name={code.name}
+                        link={code.link}
                         />
                 </Stack>
             </Accordion.Panel>
