@@ -13,7 +13,7 @@ import { useState } from "react";
 import { notifications } from '@mantine/notifications';
 import { useAuthStore, useQRStore } from "../../zustand";
 import QRCode from "react-qr-code";
-import { IconCheck, IconCopy } from "@tabler/icons-react";
+import { IconCheck, IconCopy, IconTrash } from "@tabler/icons-react";
 import { v4 as uuidv4 } from 'uuid';
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
@@ -108,7 +108,9 @@ export function QRFormCard () {
                                     <IconCopy />
                                 }
                                 variant="light"
-                                size="md"
+                                size="lg"
+                                radius="xl"
+                                w="45%"
                                 color={copied ? 'teal' : 'blue'}
                                 >
                                 {copied ? 'Copied' : 'Copy'}
@@ -116,9 +118,12 @@ export function QRFormCard () {
                         )}
                         </CopyButton>
                         <Button 
-                            variant="subtle"
+                            variant="outline"
                             onClick={() => setLink('')}
-                            size="md"
+                            size="lg"
+                            radius="xl"
+                            w="45%"
+                            rightSection={<IconTrash />}
                             >
                             Clear
                         </Button>
