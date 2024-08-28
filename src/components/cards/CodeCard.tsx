@@ -7,8 +7,9 @@ import {
     Divider, 
     Group, 
     Stack, 
-    Text 
+    Text
 } from "@mantine/core"
+import { useDisclosure } from "@mantine/hooks"
 import {
     IconCheck,
     IconCopy,
@@ -17,6 +18,7 @@ import {
     IconQrcode, 
     IconTrash 
 } from "@tabler/icons-react"
+import { EditModal } from '../modals'
 
 interface CodeCardState {
     code: any
@@ -25,6 +27,7 @@ interface CodeCardState {
 export function CodeCard ({
     code
 }: CodeCardState) {
+    const [openedEdit, { open: openEdit, close: closeEdit }] = useDisclosure(false)
 
     return(
         <Accordion.Item
@@ -34,7 +37,7 @@ export function CodeCard ({
             <Accordion.Control
                 icon={<IconQrcode />}
                 >
-                {code.name}
+                <Text>{code.name}</Text>
             </Accordion.Control>
             <Accordion.Panel>
                 <Stack 
@@ -94,6 +97,7 @@ export function CodeCard ({
                         >
                         <ActionIcon
                             variant="transparent"
+                            onClick={openEdit}
                             >
                             <IconPencil />
                         </ActionIcon>
@@ -104,6 +108,11 @@ export function CodeCard ({
                             <IconTrash />
                         </ActionIcon>
                     </Group>
+                    <EditModal 
+                        opened={openedEdit}
+                        close={closeEdit}
+                        code={code}
+                        />
                 </Stack>
             </Accordion.Panel>
         </Accordion.Item>

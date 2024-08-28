@@ -24,6 +24,7 @@ export function SavedCodesCard () {
     const loggedIn = useAuthStore((state) => state.isLogged)
 
     useEffect(() => {
+        if (uid == '') return
         const q = query(collection(db, 'users', uid, 'codes'))
         const unsubscribe = onSnapshot(
             q,
@@ -40,7 +41,7 @@ export function SavedCodesCard () {
         )
 
         return () => unsubscribe()
-    },[])
+    },[uid])
 
     return(
         <Card
@@ -77,7 +78,7 @@ export function SavedCodesCard () {
                     >
                     {codes.map((code) => {
                         return(
-                            <CodeCard code={code}/>
+                            <CodeCard key ={code.id} code={code}/>
                         )
                     })}
                 </Accordion>
