@@ -128,7 +128,7 @@ export function EditModal({ opened, close, code }: EditModalProps) {
                     >
                     <Button 
                         variant="outline"
-                        w="47.5%"
+                        w="45%"
                         size="lg"
                         radius="xl"
                         onClick={handleReset}
@@ -137,7 +137,7 @@ export function EditModal({ opened, close, code }: EditModalProps) {
                         Reset
                     </Button>
                     <Button
-                        w="47.5%"
+                        w="45%"
                         size="lg"
                         radius="xl"
                         variant="light"

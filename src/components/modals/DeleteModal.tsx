@@ -63,7 +63,7 @@ export function DeleteModal ({
                     >
                     <Button
                         size="lg"
-                        w="47.5%"
+                        w="45%"
                         radius="xl"
                         onClick={close}
                         variant="outline"
@@ -74,7 +74,7 @@ export function DeleteModal ({
                         c="red"
                         variant="light"
                         size="lg"
-                        w="47.5%"
+                        w="45%"
                         radius="xl"
                         onClick={handleDelete}
                         >
