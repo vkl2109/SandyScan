@@ -140,6 +140,7 @@ export function EditModal({ opened, close, code }: EditModalProps) {
                         w="47.5%"
                         size="lg"
                         radius="xl"
+                        variant="light"
                         onClick={handleSubmit}
                         rightSection={<IconCloudUpload size={20} />}
                         >

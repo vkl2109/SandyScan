@@ -7,9 +7,8 @@ import {
     Stack,
     Title,
     Transition,
-    rem
 } from "@mantine/core";
-import { useDisclosure, useViewportSize } from "@mantine/hooks";
+import { useDisclosure } from "@mantine/hooks";
 import { 
     IconCamera, 
     IconUpload 
@@ -43,8 +42,6 @@ export function QRScannerCard () {
         }
     }
 
-    const { width } = useViewportSize()
-
     const [ openedTransition, setOpenedTransition ] = useState(false)
 
     useEffect(() => {
@@ -74,16 +71,23 @@ export function QRScannerCard () {
             >
             <Stack w="100%" justify="center" align="center">
                 <Button
-                    p="sm"
                     mx="lg"
                     radius="xl"
                     variant="outline"
-                    h={rem(300)}
-                    mah={width - 164}
+                    pb="100%"
+                    pos="relative"
                     w={"100%"}
                     onClick={open}
                     >
-                    <Stack>
+                    <Stack
+                        pos="absolute"
+                        top={0}
+                        bottom={0}
+                        left={0}
+                        right={0}
+                        justify="center"
+                        align="center"
+                        >
                         <IconCamera size={75}/>
                         <Title>Scan</Title>
                     </Stack>
