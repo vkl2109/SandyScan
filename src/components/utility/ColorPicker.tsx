@@ -72,13 +72,14 @@ function IndivColor ({
 }
 
 interface ColorPickerProps {
-    initial: string;
+    current: string,
+    setCurrent: (newCurrent: string) => void
 }
 
 export function ColorPicker ({
-    initial = ''
+    current,
+    setCurrent
 } : ColorPickerProps) {
-    const [ current, setCurrent ] = useState(initial)
 
     return(
         <Group

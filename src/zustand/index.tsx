@@ -79,3 +79,15 @@ export const useOpenAuthStore = create<OpenAuthState>((set) => ({
         openAuth: false
     }))
 }))
+
+interface SearchColorState {
+    current: string,
+    setCurrent: (newCurrent: string) => void
+}
+
+export const useSearchColorStore = create<SearchColorState>((set) => ({
+    current: '',
+    setCurrent: (newCurrent: string) => set(() => ({
+        current: newCurrent
+    }))
+}))
