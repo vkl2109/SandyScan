@@ -31,10 +31,6 @@ export function ViewCodeModal({opened, close, name, link}: ViewCodeModalProps) {
             }
         } catch (e) {
             console.log(e)
-            notifications.show({
-                title: 'Error',
-                message: 'Sharing Failure'
-            })
         }
     }
 
