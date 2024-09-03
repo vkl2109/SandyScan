@@ -11,6 +11,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { 
     IconCamera, 
+    IconRefreshDot, 
     IconUpload 
 } from "@tabler/icons-react";
 import { ScannerModal } from "../modals/ScannerModal";
@@ -18,10 +19,12 @@ import { Html5Qrcode, Html5QrcodeResult } from "html5-qrcode";
 import { notifications } from '@mantine/notifications';
 import { useOpenScanStore, useQRStore } from "../../zustand";
 import { useEffect, useState } from "react";
+import { GenerateModal } from "../modals/GenerateModal";
 
 export function QRScannerCard () {
 
     const [opened, { open, close }] = useDisclosure(false);
+    const [ openedGenerate, {open: openGenerate, close: closeGenerate }] = useDisclosure(false)
     const setLink = useQRStore((state) => state.setLink)
     const toggle = useOpenScanStore((state) => state.toggle)
 
@@ -109,6 +112,16 @@ export function QRScannerCard () {
                         Upload
                     </Button>}
                 </FileButton>
+                <Button
+                    fullWidth
+                    radius="lg"
+                    variant="light"
+                    size="xl"
+                    leftSection={<IconRefreshDot />}
+                    onClick={openGenerate}
+                    >
+                    Generate
+                </Button>
                 <ActionIcon 
                     variant="transparent"
                     onClick={toggle}
@@ -127,6 +140,10 @@ export function QRScannerCard () {
                 <ScannerModal
                     opened={opened}
                     close={close}
+                    />
+                <GenerateModal
+                    opened={openedGenerate}
+                    close={closeGenerate}
                     />
             </Stack>
         </Card>
